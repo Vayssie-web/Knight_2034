@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Knight{% endblock %}
+
+{% block body %}
+    <h1>Create new Knight</h1>
+
+    {{ include('knight/_form.html.twig') }}
+
+    <a href="{{ path('knight_index') }}">back to list</a>
+{% endblock %}

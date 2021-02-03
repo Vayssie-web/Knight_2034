@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Knight{% endblock %}
+
+{% block body %}
+    <h1>Edit Knight</h1>
+
+    {{ include('knight/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('knight_index') }}">back to list</a>
+
+    {{ include('knight/_delete_form.html.twig') }}
+{% endblock %}
