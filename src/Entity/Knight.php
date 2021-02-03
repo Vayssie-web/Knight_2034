@@ -42,6 +42,11 @@ class Knight
      */
     private $round_table;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Coterie::class, inversedBy="member")
+     */
+    private $coterie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Knight
     public function setRoundTable(bool $round_table): self
     {
         $this->round_table = $round_table;
+
+        return $this;
+    }
+
+    public function getCoterie(): ?Coterie
+    {
+        return $this->coterie;
+    }
+
+    public function setCoterie(?Coterie $coterie): self
+    {
+        $this->coterie = $coterie;
 
         return $this;
     }
