@@ -47,6 +47,11 @@ class Knight
      */
     private $coterie;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     */
+    private $userKnight;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Knight
     public function setCoterie(?Coterie $coterie): self
     {
         $this->coterie = $coterie;
+
+        return $this;
+    }
+
+    public function getUserKnight(): ?User
+    {
+        return $this->userKnight;
+    }
+
+    public function setUserKnight(?User $userKnight): self
+    {
+        $this->userKnight = $userKnight;
 
         return $this;
     }
