@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Knight index{% endblock %}
+
+{% block body %}
+    <h1>Knight index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Description</th>
+                <th>Section</th>
+                <th>Round_table</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for knight in knights %}
+            <tr>
+                <td>{{ knight.id }}</td>
+                <td>{{ knight.firstname }}</td>
+                <td>{{ knight.lastname }}</td>
+                <td>{{ knight.description }}</td>
+                <td>{{ knight.section }}</td>
+                <td>{{ knight.roundTable ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('knight_show', {'id': knight.id}) }}">show</a>
+                    <a href="{{ path('knight_edit', {'id': knight.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('knight_new') }}">Create new</a>
+{% endblock %}
