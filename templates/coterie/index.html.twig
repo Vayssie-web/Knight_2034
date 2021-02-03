@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coterie index{% endblock %}
+
+{% block body %}
+    <h1>Coterie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coterie in coteries %}
+            <tr>
+                <td>{{ coterie.id }}</td>
+                <td>{{ coterie.Name }}</td>
+                <td>
+                    <a href="{{ path('coterie_show', {'id': coterie.id}) }}">show</a>
+                    <a href="{{ path('coterie_edit', {'id': coterie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('coterie_new') }}">Create new</a>
+{% endblock %}

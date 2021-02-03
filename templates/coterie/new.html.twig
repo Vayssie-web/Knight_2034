@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Coterie{% endblock %}
+
+{% block body %}
+    <h1>Create new Coterie</h1>
+
+    {{ include('coterie/_form.html.twig') }}
+
+    <a href="{{ path('coterie_index') }}">back to list</a>
+{% endblock %}
