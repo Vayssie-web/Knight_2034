@@ -28,7 +28,9 @@
                 <td>{{ knight.roundTable ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('knight_show', {'id': knight.id}) }}">show</a>
-                    <a href="{{ path('knight_edit', {'id': knight.id}) }}">edit</a>
+                    {% if app.user.knight == knight %}
+                        <a href="{{ path('knight_edit', {'id': knight.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -38,6 +40,11 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('knight_new') }}">Create new</a>
+    {% if app.user %}
+        {% if app.user.knight %}
+            <a class="" href="{{ path('knight_edit', {'id': app.user.knight.id}) }}">Edit Knight</a>
+        {% else %}
+            <a class="" href="{{ path('knight_new') }}">Create new</a>
+        {% endif %}
+    {% endif %}
 {% endblock %}
