@@ -6,7 +6,7 @@ use App\Entity\Knight;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class KnightFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
         Elle porte constamment Fantôme, sa méta-armure de prestige façonnée sur le châssis de l’armure Rogue, 
         lui permettant de rester discrète en toutes circonstances et de se jouer des sens de tous ses ennemis.');
         $kay->setRoundTable('true');
+        $manager->persist($kay);
         $manager->flush();
     }
 }
