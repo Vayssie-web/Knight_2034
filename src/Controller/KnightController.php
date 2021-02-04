@@ -5,18 +5,19 @@ namespace App\Controller;
 use App\Entity\Knight;
 use App\Form\KnightType;
 use App\Repository\KnightRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * @Route("/knight")
+ * @Route("/knight", name="knight_")
  */
 class KnightController extends AbstractController
 {
     /**
-     * @Route("/", name="knight_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(KnightRepository $knightRepository): Response
     {
@@ -26,15 +27,19 @@ class KnightController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="knight_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        if($this->getUser()->getKnight() !== null){
+            throw new AccessDeniedException();
+        }
         $knight = new Knight();
         $form = $this->createForm(KnightType::class, $knight);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $knight->setUserKnight($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($knight);
             $entityManager->flush();
@@ -49,7 +54,7 @@ class KnightController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="knight_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(Knight $knight): Response
     {
@@ -59,10 +64,13 @@ class KnightController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="knight_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Knight $knight): Response
     {
+        if($knight->getUserKnight() !== $this->getUser()){
+            throw new AccessDeniedException();
+        }
         $form = $this->createForm(KnightType::class, $knight);
         $form->handleRequest($request);
 
@@ -79,7 +87,7 @@ class KnightController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="knight_delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
     public function delete(Request $request, Knight $knight): Response
     {

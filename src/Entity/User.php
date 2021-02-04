@@ -36,6 +36,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Knight::class, mappedBy="userKnight", cascade={"persist", "remove"})
+     */
+    private $knight;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,5 +117,22 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getKnight(): ?Knight
+    {
+        return $this->knight;
+    }
+
+    public function setKnight(Knight $knight): self
+    {
+        // set the owning side of the relation if necessary
+        if ($knight->getUserKnight() !== $this) {
+            $knight->setUserKnight($this);
+        }
+
+        $this->knight = $knight;
+
+        return $this;
     }
 }

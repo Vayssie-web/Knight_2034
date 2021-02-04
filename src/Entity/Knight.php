@@ -48,7 +48,8 @@ class Knight
     private $coterie;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="knight", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $userKnight;
 
