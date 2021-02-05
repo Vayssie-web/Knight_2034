@@ -20,7 +20,6 @@
         <tbody>
         {% for knight in knights %}
             <tr>
-                <td>{{ knight.id }}</td>
                 <td>{{ knight.firstname }}</td>
                 <td>{{ knight.lastname }}</td>
                 <td>{{ knight.description }}</td>
@@ -28,8 +27,10 @@
                 <td>{{ knight.roundTable ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('knight_show', {'id': knight.id}) }}">show</a>
-                    {% if app.user.knight == knight %}
-                        <a href="{{ path('knight_edit', {'id': knight.id}) }}">edit</a>
+                    {% if app.user %}
+                        {% if app.user.knight == knight %}
+                            <a href="{{ path('knight_edit', {'id': knight.id}) }}">edit</a>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
